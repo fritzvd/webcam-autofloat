@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    video {
+      height: calc(100vw / 1.6);
+    }
+  </style>
+</head>
+<body>
+  <video id="videoElement" autoplay></video>
+  <button id="pipButtonElement">Clicky</button>
+  <script>
+    var video = document.querySelector("video");
+
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+          return video.requestPictureInPicture()
+        })
+        .then(() => console.log('pip?'))
+        .catch(function (err0r) {
+          console.log("Something went wrong!", err0r);
+        });
+
+    }
+    pipButtonElement.addEventListener('click', async function() {
+      pipButtonElement.disabled = true;
+
+      await videoElement.requestPictureInPicture();
+
+      pipButtonElement.disabled = false;
+    });
+
+  </script>
+</body>
+</html>
