@@ -3,26 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>webcam autofloat</title>
   <style>
-    video {
-      height: calc(100vw / 1.6);
+    body {
+      color: tomato;
+      font-family: 'Futura', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: cornsilk;
     }
+
+    button {
+      border-radius: 10px;
+      background: tomato;
+      color: cornsilk;
+      margin: 1em;
+      padding: 1em 2em;
+      font-size: 2rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+  </style>
   </style>
 </head>
 <body>
-  <video id="videoElement" autoplay></video>
-  <button id="pipButtonElement">Clicky</button>
+  <h1>Webcam autofloat</h1>
+  <video autoplay></video>
+  <button id="pipButtonElement">Pop It!</button>
   <script>
-    var video = document.querySelector("video");
+    const video = document.querySelector("video");
 
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true })
         .then(function (stream) {
           video.srcObject = stream;
-          return video.requestPictureInPicture()
         })
-        .then(() => console.log('pip?'))
         .catch(function (err0r) {
           console.log("Something went wrong!", err0r);
         });
@@ -31,7 +50,7 @@
     pipButtonElement.addEventListener('click', async function() {
       pipButtonElement.disabled = true;
 
-      await videoElement.requestPictureInPicture();
+      await video.requestPictureInPicture();
 
       pipButtonElement.disabled = false;
     });
